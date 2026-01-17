@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thirumal & Co - Billing System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header class="header">
+        <div class="container">
+            <h1 class="logo">Thirumal & Co</h1>
+            <nav class="nav-tabs">
+                <button class="nav-tab active" data-section="menu">Menu</button>
+                <button class="nav-tab" data-section="manage-menu">Manage Menu</button>
+                <button class="nav-tab" data-section="sales-report">Sales Report</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Menu Section -->
+        <section id="menu-section" class="content-section active">
+            <div class="container">
+                <h2>Menu</h2>
+                <div id="menu-grid" class="menu-grid">
+                    <!-- Menu items will be dynamically loaded here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Manage Menu Section -->
+        <section id="manage-menu-section" class="content-section">
+            <div class="container">
+                <h2>Manage Menu</h2>
+                
+                <!-- Add/Edit Form -->
+                <div class="menu-form-container">
+                    <form id="menu-form" class="menu-form">
+                        <input type="hidden" id="item-id" value="">
+                        <div class="form-group">
+                            <label for="item-name">Item Name:</label>
+                            <input type="text" id="item-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="item-price">Price (₹):</label>
+                            <input type="number" id="item-price" step="0.01" min="0" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="item-image">Image URL:</label>
+                            <input type="text" id="item-image" placeholder="Enter image URL or path">
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" id="submit-btn" class="btn btn-primary">Add Item</button>
+                            <button type="button" id="cancel-btn" class="btn btn-secondary" style="display: none;">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Menu Items Table -->
+                <div class="menu-table-container">
+                    <h3>Current Menu Items</h3>
+                    <table id="menu-table" class="menu-table">
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>Name</th>
+                                <th>Price</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="menu-table-body">
+                            <!-- Menu items will be dynamically loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sales Report Section -->
+        <section id="sales-report-section" class="content-section">
+            <div class="container">
+                <h2>Monthly Sales Report</h2>
+                
+                <!-- Date Range Selector -->
+                <div class="date-range-selector">
+                    <div class="form-group">
+                        <label for="start-date">Start Date:</label>
+                        <input type="date" id="start-date">
+                    </div>
+                    <div class="form-group">
+                        <label for="end-date">End Date:</label>
+                        <input type="date" id="end-date">
+                    </div>
+                    <button id="generate-report-btn" class="btn btn-primary">Generate Report</button>
+                </div>
+
+                <!-- Report Results -->
+                <div id="report-results" class="report-results" style="display: none;">
+                    <div class="report-summary">
+                        <h3>Summary</h3>
+                        <div class="summary-card">
+                            <p><strong>Total Revenue:</strong> <span id="total-revenue">₹0.00</span></p>
+                            <p><strong>Total Orders:</strong> <span id="total-orders">0</span></p>
+                        </div>
+                    </div>
+
+                    <div class="report-details">
+                        <h3>Item-wise Sales</h3>
+                        <table id="item-wise-table" class="report-table">
+                            <thead>
+                                <tr>
+                                    <th>Item Name</th>
+                                    <th>Quantity Sold</th>
+                                    <th>Revenue</th>
+                                </tr>
+                            </thead>
+                            <tbody id="item-wise-body">
+                                <!-- Item-wise data will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="report-details">
+                        <h3>Date-wise Breakdown</h3>
+                        <table id="date-wise-table" class="report-table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Orders</th>
+                                    <th>Revenue</th>
+                                </tr>
+                            </thead>
+                            <tbody id="date-wise-body">
+                                <!-- Date-wise data will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Cart Sidebar -->
+    <aside id="cart-sidebar" class="cart-sidebar">
+        <div class="cart-header">
+            <h2>Cart</h2>
+            <button id="close-cart-btn" class="close-btn">&times;</button>
+        </div>
+        <div id="cart-items" class="cart-items">
+            <!-- Cart items will be dynamically loaded here -->
+            <p class="empty-cart">Cart is empty</p>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <p><strong>Total: ₹<span id="cart-total">0.00</span></strong></p>
+            </div>
+            <div class="cart-actions">
+                <button id="pay-now-btn" class="btn btn-success">Pay Now</button>
+                <button id="print-bill-btn" class="btn btn-primary">Print Bill</button>
+                <button id="clear-cart-btn" class="btn btn-danger">Clear Cart</button>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Cart Toggle Button -->
+    <button id="cart-toggle-btn" class="cart-toggle-btn">
+        <span id="cart-count">0</span>
+        🛒
+    </button>
+
+    <!-- Bill Print Modal -->
+    <div id="bill-modal" class="bill-modal">
+        <div class="bill-content">
+            <div class="bill-header">
+                <h2>Thirumal & Co</h2>
+                <button id="close-bill-btn" class="close-btn">&times;</button>
+            </div>
+            <div id="bill-body" class="bill-body">
+                <!-- Bill content will be generated here -->
+            </div>
+            <div class="bill-actions">
+                <button id="print-bill-modal-btn" class="btn btn-primary">Print</button>
+                <button id="close-bill-modal-btn" class="btn btn-secondary">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success/Error Messages -->
+    <div id="message-toast" class="message-toast"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
