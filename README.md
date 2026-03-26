@@ -1,7 +1,3 @@
-Here’s your content converted into a **clean, professional GitHub README with bold headings (`#`)** 👇
-
----
-
 # **🍽️ Restaurant Billing Website**
 
 A complete restaurant billing system built using **HTML, CSS, and JavaScript**.
